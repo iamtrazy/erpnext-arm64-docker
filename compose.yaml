@@ -1,6 +1,11 @@
 services:
   backend:
-    build: ./erpnext_docker
+    image: erpnext
+    build:
+      context: ./erpnext_docker
+      dockerfile: images/custom/Containerfile
+      args:
+        - APPS_JSON_BASE64=WwogIHsKICAgICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2ZyYXBwZS9lcnBuZXh0IiwKICAgICJicmFuY2giOiAidmVyc2lvbi0xNSIKICB9LAogIHsKICAgICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2ZyYXBwZS9ocm1zIiwKICAgICJicmFuY2giOiAidmVyc2lvbi0xNSIKICB9LAogIHsKICAgICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2ZyYXBwZS9wYXltZW50cyIsCiAgICAiYnJhbmNoIjogInZlcnNpb24tMTUiCiAgfQpdCg==
     deploy:
       restart_policy:
         condition: on-failure
@@ -9,7 +14,7 @@ services:
       - logs:/home/frappe/frappe-bench/logs
 
   configurator:
-    build: ./erpnext_docker
+    image: erpnext
     deploy:
       restart_policy:
         condition: none
@@ -37,7 +42,7 @@ services:
       - logs:/home/frappe/frappe-bench/logs
 
   create-site:
-    build: ./erpnext_docker
+    image: erpnext
     deploy:
       restart_policy:
         condition: none
@@ -88,7 +93,7 @@ services:
       - db-data:/var/lib/mysql
 
   frontend:
-    build: ./erpnext_docker
+    image: erpnext
     depends_on:
       - websocket
     deploy:
@@ -105,12 +110,14 @@ services:
       UPSTREAM_REAL_IP_RECURSIVE: "off"
       PROXY_READ_TIMEOUT: 120
       CLIENT_MAX_BODY_SIZE: 50m
+    ports:
+      - "8080:8080"
     volumes:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
 
   queue-long:
-    build: ./erpnext_docker
+    image: erpnext
     deploy:
       restart_policy:
         condition: on-failure
@@ -124,7 +131,7 @@ services:
       - logs:/home/frappe/frappe-bench/logs
 
   queue-short:
-    build: ./erpnext_docker
+    image: erpnext
     deploy:
       restart_policy:
         condition: on-failure
@@ -154,7 +161,7 @@ services:
       - redis-cache-data:/data
 
   scheduler:
-    build: ./erpnext_docker
+    image: erpnext
     deploy:
       restart_policy:
         condition: on-failure
@@ -166,7 +173,7 @@ services:
       - logs:/home/frappe/frappe-bench/logs
 
   websocket:
-    build: ./erpnext_docker
+    image: erpnext
     deploy:
       restart_policy:
         condition: on-failure
