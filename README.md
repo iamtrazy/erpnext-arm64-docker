@@ -1,6 +1,3 @@
-Here's a `README.md` that should fit your needs for a custom Frappe build with Docker Compose for both x86 and ARM64, including instructions for installing the HRMS and Payment modules.
-
-```markdown
 # Custom Frappe Build with Docker Compose
 
 This repository contains a custom Frappe build configured to work on both `x86` and `arm64` architectures, with `HRMS` and `Payments` modules included. The setup uses Docker Compose for easy deployment and management.
@@ -73,5 +70,3 @@ docker compose down
 ```
 
 This stops and removes all containers defined in the `compose.yml` file.
-
-```
